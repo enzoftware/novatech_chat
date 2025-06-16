@@ -12,7 +12,20 @@
           "package_name": "com.enzoftware.novatech.chat.novatech_chat"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "487399717017-6cf2v4u65892atbktanac0pd1c696kf5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.enzoftware.novatech.chat.novatech_chat",
+            "certificate_hash": "2cd9112a65db77198bb9f1cf73f072045078c7e0"
+          }
+        },
+        {
+          "client_id": "487399717017-gp66bk218a1al20odv1i7ll9dijs9911.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCrwWeoP0tY-4JTcVyk-rEGEM6jK_s-gx4"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "487399717017-gp66bk218a1al20odv1i7ll9dijs9911.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "487399717017-5db9anqlebaj0nq1sueqp4mg9tbcj4om.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.enzoftware.novatech.chat.novatech-chat"
+              }
+            }
+          ]
         }
       }
     }
