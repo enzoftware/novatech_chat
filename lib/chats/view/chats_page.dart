@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:novatech_chat/chats/chats.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
 
 class ChatsPage extends StatelessWidget {
   const ChatsPage({super.key});
@@ -25,12 +26,14 @@ class ChatsView extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: const Text('Chats'),
+            actions: [
+              IconButton(
+                icon: const Icon(LucideIcons.plus),
+                onPressed: () {},
+              ),
+            ],
           ),
           body: const Placeholder(),
-          floatingActionButton: FloatingActionButton(
-            child: const Icon(Icons.add),
-            onPressed: () {},
-          ),
         );
       },
     );
