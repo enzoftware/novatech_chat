@@ -6,3 +6,10 @@ sealed class AuthenticationEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class AuthenticationGoogleSignInRequested extends AuthenticationEvent {
+  const AuthenticationGoogleSignInRequested();
+
+  @override
+  List<Object> get props => [];
+}

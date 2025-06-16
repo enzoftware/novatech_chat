@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:novatech_chat/firebase_options.dart';
 
 class AppBlocObserver extends BlocObserver {
@@ -22,7 +24,12 @@ class AppBlocObserver extends BlocObserver {
   }
 }
 
-Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
+Future<void> bootstrap(
+  FutureOr<Widget> Function({
+    required GoogleSignIn googleSignIn,
+    required FirebaseAuth firebaseAuth,
+  }) builder,
+) async {
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
@@ -32,7 +39,10 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  final googleSignIn = GoogleSignIn();
+  final firebaseAuth = FirebaseAuth.instance;
+
   Bloc.observer = const AppBlocObserver();
 
-  runApp(await builder());
+  runApp(await builder(googleSignIn: googleSignIn, firebaseAuth: firebaseAuth));
 }

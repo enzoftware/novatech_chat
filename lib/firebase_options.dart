@@ -71,4 +71,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'novatech-chat.firebasestorage.app',
     iosBundleId: 'com.enzoftware.novatech.chat.novatech-chat',
   );
+
 }
