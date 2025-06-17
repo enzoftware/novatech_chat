@@ -82,10 +82,10 @@ class NolatechApp extends StatelessWidget {
               ? '/authentication'
               : '/chats',
           routes: {
-            '/authentication': (context) => const AuthenticationPage(),
-            '/chats': (context) => const ChatsPage(),
-            '/new_chat': (context) => const NewChatPage(),
-            '/chat/:chatId': (context) {
+            '/authentication': (_) => const AuthenticationPage(),
+            '/chats': (_) => const ChatsPage(),
+            '/new_chat': (_) => const NewChatPage(),
+            '/chat/:chatId': (_) {
               final chatId =
                   ModalRoute.of(context)!.settings.arguments! as String;
               return ChatPage(chatId: chatId);
