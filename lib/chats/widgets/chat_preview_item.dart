@@ -17,12 +17,10 @@ class ChatPreviewItem extends StatelessWidget {
     return ListTile(
       onTap: () => Navigator.pushNamed(
         context,
-        '/chat/:chatId',
+        '/chat',
         arguments: chatPreview.id,
       ),
-      leading: const ShadAvatar(
-        'assets/images/avatar_placeholder.png',
-      ),
+      leading: const SizedBox(),
       title: Text(
         chatPreview.participants.last,
         style: const TextStyle(

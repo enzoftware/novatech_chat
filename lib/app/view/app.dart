@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:novatech_chat/app/bloc/app_bloc.dart';
 import 'package:novatech_chat/authentication/authentication.dart';
 import 'package:novatech_chat/chat/chat.dart';
 import 'package:novatech_chat/chats/chats.dart';
@@ -82,10 +81,10 @@ class NolatechApp extends StatelessWidget {
               ? '/authentication'
               : '/chats',
           routes: {
-            '/authentication': (_) => const AuthenticationPage(),
-            '/chats': (_) => const ChatsPage(),
-            '/new_chat': (_) => const NewChatPage(),
-            '/chat/:chatId': (_) {
+            '/authentication': (context) => const AuthenticationPage(),
+            '/chats': (context) => const ChatsPage(),
+            '/new_chat': (context) => const NewChatPage(),
+            '/chat': (context) {
               final chatId =
                   ModalRoute.of(context)!.settings.arguments! as String;
               return ChatPage(chatId: chatId);
@@ -97,26 +96,6 @@ class NolatechApp extends StatelessWidget {
           ),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          builder: (context, child) =>
-              child ??
-              BlocConsumer<AppBloc, AppState>(
-                listener: (context, state) {
-                  if (state.status == AppStatus.unauthenticated) {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      '/authentication',
-                      (route) => false,
-                    );
-                  } else if (state.status == AppStatus.authenticated) {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      '/chats',
-                      (route) => false,
-                    );
-                  }
-                },
-                builder: (context, state) {
-                  return const SizedBox.shrink();
-                },
-              ),
         ),
       ),
     );

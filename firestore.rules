@@ -41,12 +41,23 @@ service cloud.firestore {
 
       // Messages subcollection rules
       match /messages/{messageId} {
-        // Allow participants to read all messages and create new ones
-        allow read: if isParticipant();
-        allow create: if isAuthenticated() && 
-                     request.auth.uid in get(/databases/$(database)/documents/chats/$(chatId)).data.participants;
+        // Helper function to check if user is a chat participant for messages
+        function isMessageParticipant() {
+          let chatData = get(/databases/$(database)/documents/chats/$(chatId)).data;
+          return isAuthenticated() && request.auth.uid in chatData.participants;
+        }
+
+        // Allow participants to read messages
+        allow read: if isMessageParticipant();
+        
+        // Allow participants to create messages with valid data
+        allow create: if isMessageParticipant() && 
+                     request.resource.data.keys().hasAll(['senderId', 'text', 'timestamp', 'read']) &&
+                     request.auth.uid == request.resource.data.senderId;
+                     
         // Only allow message authors to modify or delete their messages
         allow update, delete: if isAuthenticated() && 
+                             resource != null &&
                              request.auth.uid == resource.data.senderId;
       }
     }

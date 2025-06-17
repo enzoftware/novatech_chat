@@ -16,7 +16,6 @@ class UserChatItem extends StatelessWidget {
     return ListTile(
       leading: const CircleAvatar(
         radius: 24,
-        backgroundImage: AssetImage('assets/images/avatar_placeholder.png'),
       ),
       title: Text(
         chatUser.displayName,
