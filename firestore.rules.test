@@ -1,0 +1,36 @@
+rules_test {
+  match /databases/{db}/documents {
+    match /users/{userId} {
+      // Test user profile access
+      allow read $(uid) {
+        expect.that(request.auth.uid).isNotNull();
+      }
+
+      allow write $(uid) {
+        expect.that(request.auth.uid).equals(userId);
+      }
+    }
+
+    match /chats/{chatId} {
+      // Test chat access
+      allow read, write {
+        expect.that(request.auth.uid).isIn(resource.data.participants);
+      }
+
+      match /messages/{messageId} {
+        // Test message access
+        allow read {
+          expect.that(request.auth.uid).isIn(get(/databases/$(db)/documents/chats/$(chatId)).data.participants);
+        }
+
+        allow create {
+          expect.that(request.auth.uid).isIn(get(/databases/$(db)/documents/chats/$(chatId)).data.participants);
+        }
+
+        allow update, delete {
+          expect.that(request.auth.uid).equals(resource.data.senderId);
+        }
+      }
+    }
+  }
+}
