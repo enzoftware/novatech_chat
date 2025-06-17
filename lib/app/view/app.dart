@@ -64,12 +64,6 @@ class NolatechApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => AppBloc(
-              authenticationRepository:
-                  context.read<AuthenticationRepository>(),
-            ),
-          ),
-          BlocProvider(
             create: (context) => AuthenticationBloc(
               authenticationRepository:
                   context.read<AuthenticationRepository>(),
