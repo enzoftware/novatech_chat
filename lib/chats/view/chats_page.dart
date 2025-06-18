@@ -103,7 +103,7 @@ class ChatsView extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final chat = state.chats[index];
                     return ChatPreviewItem(
-                      chatPreview: chat,
+                      chatUi: chat,
                     );
                   },
                 ),

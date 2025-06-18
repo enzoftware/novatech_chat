@@ -16,12 +16,12 @@ class ChatsState extends Equatable {
   });
 
   final ChatsStatus status;
-  final List<ChatPreview> chats;
+  final List<ChatPreviewUi> chats;
   final String? errorMessage;
 
   ChatsState copyWith({
     ChatsStatus? status,
-    List<ChatPreview>? chats,
+    List<ChatPreviewUi>? chats,
     String? errorMessage,
   }) {
     return ChatsState(

@@ -1,19 +1,28 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:novatech_chat/core/data/repository/authentication_repository.dart';
 import 'package:novatech_chat/core/data/repository/chat_repository.dart';
 import 'package:novatech_chat/core/domain/models/models.dart';
 import 'package:novatech_chat/core/domain/usecase/get_user_chats_use_case.dart';
 
 class MockChatRepository extends Mock implements ChatRepository {}
 
+class MockAuthenticationRepository extends Mock
+    implements AuthenticationRepository {}
+
 void main() {
   late GetUserChatsUseCase useCase;
   late MockChatRepository mockChatRepository;
+  late MockAuthenticationRepository mockAuthRepository;
 
   setUp(() {
     mockChatRepository = MockChatRepository();
+    mockAuthRepository = MockAuthenticationRepository();
+
+    when(() => mockAuthRepository.currentUser).thenReturn(null);
     useCase = GetUserChatsUseCase(
       chatRepository: mockChatRepository,
+      authenticationRepository: mockAuthRepository,
     );
   });
 
@@ -22,6 +31,7 @@ void main() {
       expect(
         () => GetUserChatsUseCase(
           chatRepository: mockChatRepository,
+          authenticationRepository: mockAuthRepository,
         ),
         isNot(throwsException),
       );

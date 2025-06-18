@@ -5,6 +5,17 @@ import 'package:google_sign_in/google_sign_in.dart';
 /// This is an abstract class for the authentication repository.
 abstract class AuthenticationRepository {
   Future<UserCredential> signInWithGoogle();
+
+  Future<UserCredential> signInWithEmailAndPassword({
+    required String email,
+    required String password,
+  });
+
+  Future<UserCredential> createUserWithEmailAndPassword({
+    required String email,
+    required String password,
+    required String name,
+  });
   Future<void> signOut();
   User? get currentUser;
   Stream<User?> get authStateChanges;
@@ -57,6 +68,7 @@ class FirebaseAuthenticationRepository implements AuthenticationRepository {
             'displayName': user.displayName ?? 'Unknown User',
             'photoUrl': user.photoURL,
             'createdAt': FieldValue.serverTimestamp(),
+            'updatedAt': FieldValue.serverTimestamp(),
             'lastSeen': FieldValue.serverTimestamp(),
             'isOnline': true,
             'searchName': (user.displayName ?? 'Unknown User').toLowerCase(),
@@ -76,6 +88,37 @@ class FirebaseAuthenticationRepository implements AuthenticationRepository {
   }
 
   @override
+  Future<UserCredential> createUserWithEmailAndPassword({
+    required String email,
+    required String password,
+    required String name,
+  }) async {
+    final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    final user = userCredential.user;
+
+    if (user != null) {
+      await user.updateDisplayName(name);
+      await user.reload();
+      await _firestore.collection('users').doc(user.uid).set({
+        'id': user.uid,
+        'email': email,
+        'displayName': name,
+        'photoURL': user.photoURL,
+        'createdAt': FieldValue.serverTimestamp(),
+        'updatedAt': FieldValue.serverTimestamp(),
+        'lastSeen': FieldValue.serverTimestamp(),
+        'isOnline': true,
+        'searchName': (user.displayName ?? 'Unknown User').toLowerCase(),
+      });
+    }
+
+    return userCredential;
+  }
+
+  @override
   Future<void> signOut() async {
     final user = _firebaseAuth.currentUser;
     if (user != null) {
@@ -87,5 +130,16 @@ class FirebaseAuthenticationRepository implements AuthenticationRepository {
     }
 
     return _firebaseAuth.signOut();
+  }
+
+  @override
+  Future<UserCredential> signInWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) {
+    return _firebaseAuth.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
   }
 }

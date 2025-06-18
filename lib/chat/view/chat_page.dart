@@ -194,7 +194,7 @@ class ChatInput extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 8),
-            child: ShadButton(
+            child: ShadButton.outline(
               onPressed: onSend,
               child: const Icon(Icons.send),
             ),

@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:novatech_chat/core/data/repository/authentication_repository.dart';
 import 'package:novatech_chat/core/data/repository/chat_repository.dart';
-import 'package:novatech_chat/core/domain/models/models.dart';
 import 'package:novatech_chat/core/domain/usecase/get_current_user_use_case.dart';
 import 'package:novatech_chat/core/domain/usecase/get_user_chats_use_case.dart';
 import 'package:novatech_chat/core/domain/usecase/sign_out_use_case.dart';
@@ -21,6 +20,7 @@ class ChatsBloc extends Bloc<ChatsEvent, ChatsState> {
         ),
         _getUserChatsUseCase = GetUserChatsUseCase(
           chatRepository: chatRepository,
+          authenticationRepository: authenticationRepository,
         ),
         _getCurrentUserUseCase = GetCurrentUserUseCase(
           authenticationRepository: authenticationRepository,
@@ -44,7 +44,7 @@ class ChatsBloc extends Bloc<ChatsEvent, ChatsState> {
 
       final currentUser = await _getCurrentUserUseCase();
 
-      await emit.forEach<List<ChatPreview>>(
+      await emit.forEach<List<ChatPreviewUi>>(
         _getUserChatsUseCase(currentUser?.uid ?? ''),
         onData: (chats) => state.copyWith(
           status: ChatsStatus.success,

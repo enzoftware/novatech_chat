@@ -11,6 +11,7 @@ import 'package:novatech_chat/core/data/repository/authentication_repository.dar
 import 'package:novatech_chat/core/data/repository/chat_repository.dart';
 import 'package:novatech_chat/l10n/l10n.dart';
 import 'package:novatech_chat/new_chat/new_chat.dart';
+import 'package:novatech_chat/register/register.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 class NolatechApp extends StatelessWidget {
@@ -76,7 +77,7 @@ class NolatechApp extends StatelessWidget {
             ),
           ),
         ],
-        child: ShadApp(
+        child: ShadApp.material(
           initialRoute: FirebaseAuth.instance.currentUser == null
               ? '/authentication'
               : '/chats',
@@ -84,6 +85,7 @@ class NolatechApp extends StatelessWidget {
             '/authentication': (context) => const AuthenticationPage(),
             '/chats': (context) => const ChatsPage(),
             '/new_chat': (context) => const NewChatPage(),
+            '/register': (context) => const RegisterPage(),
             '/chat': (context) {
               final chatId =
                   ModalRoute.of(context)!.settings.arguments! as String;

@@ -135,4 +135,21 @@ class ChatRemoteDataSource {
       'lastSeen': FieldValue.serverTimestamp(),
     });
   }
+
+  /// Fetches a user by their ID
+  Future<ChatUser?> getUserById(String userId) async {
+    final doc = await firestore.collection('users').doc(userId).get();
+    if (doc.exists) {
+      final data = doc.data();
+      return ChatUser(
+        id: doc.id,
+        displayName: data?['displayName'] as String? ?? 'Unknown User',
+        email: data?['email'] as String? ?? '',
+        photoUrl: data?['photoUrl'] as String?,
+        lastSeen: (data?['lastSeen'] as Timestamp?)?.toDate(),
+        isOnline: data?['isOnline'] as bool? ?? false,
+      );
+    }
+    return null;
+  }
 }

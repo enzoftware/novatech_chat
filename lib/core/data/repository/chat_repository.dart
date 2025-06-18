@@ -13,6 +13,7 @@ abstract class ChatRepository {
     required String currentUserId,
     required String otherUserId,
   });
+  Future<ChatUser> getUserById(String userId);
 }
 
 class FirebaseChatRepository implements ChatRepository {
@@ -57,5 +58,14 @@ class FirebaseChatRepository implements ChatRepository {
       currentUserId: currentUserId,
       otherUserId: otherUserId,
     );
+  }
+
+  @override
+  Future<ChatUser> getUserById(String userId) async {
+    final user = await remoteDataSource.getUserById(userId);
+    if (user == null) {
+      throw Exception('User not found');
+    }
+    return user;
   }
 }
