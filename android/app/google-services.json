@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "487399717017",
+    "firebase_url": "https://novatech-chat-default-rtdb.firebaseio.com",
     "project_id": "novatech-chat",
     "storage_bucket": "novatech-chat.firebasestorage.app"
   },
@@ -19,6 +20,14 @@
           "android_info": {
             "package_name": "com.enzoftware.novatech.chat.novatech_chat",
             "certificate_hash": "2cd9112a65db77198bb9f1cf73f072045078c7e0"
+          }
+        },
+        {
+          "client_id": "487399717017-meqloofjpon6v3fbrv4svlopn1j4ivc1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.enzoftware.novatech.chat.novatech_chat",
+            "certificate_hash": "09b9ea0ae3b149f85ed313314c00f3fd029aa260"
           }
         },
         {

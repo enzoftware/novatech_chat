@@ -6,3 +6,17 @@ sealed class ChatsEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class ChatsGetUserChats extends ChatsEvent {
+  const ChatsGetUserChats();
+
+  @override
+  List<Object> get props => [];
+}
+
+class ChatsSignOut extends ChatsEvent {
+  const ChatsSignOut();
+
+  @override
+  List<Object> get props => [];
+}
