@@ -1,4 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:formz/formz.dart';
 import 'package:mocktail/mocktail.dart';
@@ -8,6 +9,8 @@ import 'package:novatech_chat/register/models/models.dart';
 
 class MockAuthenticationRepository extends Mock
     implements AuthenticationRepository {}
+
+class MockUserCredential extends Mock implements UserCredential {}
 
 void main() {
   late AuthenticationRepository authenticationRepository;
@@ -172,7 +175,7 @@ void main() {
               password: any(named: 'password'),
               name: any(named: 'name'),
             ),
-          ).thenAnswer((_) async => throw UnimplementedError());
+          ).thenAnswer((_) => Future.value(MockUserCredential()));
         },
         build: () =>
             RegisterBloc(authenticationRepository: authenticationRepository),
